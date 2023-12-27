@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctoutsuhp45ks"]
+
+[ext_resource type="Script" path="res://levels/hud/HUD.gd" id="1_vtpc4"]
+
+[node name="Hud" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_vtpc4")
+
+[node name="FuelGauge" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_top = 176.0
+offset_right = 320.0
+offset_bottom = 180.0
+value = 50.0
+rounded = true
+show_percentage = false

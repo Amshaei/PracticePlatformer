@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5bjq7ehfbsvd"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_w3ooc"]
+[ext_resource type="PackedScene" uid="uid://dw2pn6da4hoxn" path="res://player.tscn" id="2_ecprg"]
+[ext_resource type="PackedScene" uid="uid://dr8hj64sj0fv" path="res://levels/level_switch.tscn" id="3_oiqoh"]
+[ext_resource type="PackedScene" uid="uid://ctoutsuhp45ks" path="res://levels/hud/HUD.tscn" id="4_nnan4"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_w3ooc")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(0, 0, 16, 0, 16, 168, 64, 168, 112, 168, 168, 144, 192, 112, 224, 112, 224, 152, 256, 152, 256, 80, 304, 80, 304, 80, 320, 80, 320, 184, 0, 184)
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
+color = Color(0.929412, 0.0509804, 0.113725, 1)
+
+[node name="Player" parent="." instance=ExtResource("2_ecprg")]
+position = Vector2(32, 144)
+
+[node name="LevelSwitch" parent="." instance=ExtResource("3_oiqoh")]
+position = Vector2(288, 72)
+
+[node name="Hud" parent="." instance=ExtResource("4_nnan4")]
