@@ -1,28 +1,35 @@
 extends Area2D
 
-# Add a Timer node to your scene and set its wait time to a very small value.
-@onready var timer = Timer.new()
-@onready var hud = get_tree().current_scene.get_node("Hud")
+var levels = []
+var current_level_index = 0
+
+@onready var current_level = $"../Start"
+@onready var player = $"../Player"
 
 func _ready():
-	add_child(timer)
 	var callable = Callable(self, "_on_body_entered")
 	connect("body_entered", callable)
 
+	var dir = DirAccess.open("res://levels/level_switching/")
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if file_name.ends_with(".tscn"):
+				var level = {
+					"scene": load("res://levels/level_switching/" + file_name),
+					"player_position": Vector2(32, 0)  # replace with the desired player position
+				}
+				levels.append(level)
+			file_name = dir.get_next()
+
 func _on_body_entered(body):
 	if body.name == "Player":
-		timer.start(0.001)  # Start the timer
-		await timer.timeout  # Wait for the timer to timeout
-		var new_level_path = get_tree().current_scene.next_level
-		var new_level_resource = load(new_level_path)
-		if new_level_resource is PackedScene:
-			var new_level = new_level_resource.instantiate()
-			# Add the new level to the scene tree before getting the 'Hud' node.
-			get_tree().root.add_child(new_level)
-			# Get the 'Hud' node from the new level.
-			var hud = new_level.get_node("Hud")
-			# Initialize the 'Hud' node.
-			var current_scene = get_tree().current_scene
-			body.queue_free()  # Destroy the player
-			current_scene.queue_free()
-			
+		if current_level_index < levels.size():
+			var level = levels[current_level_index]
+			var scene = level["scene"].instantiate()
+			current_level.queue_free()
+			get_tree().get_root().add_child(scene)
+			current_level = scene
+			player.position = level["player_position"]
+			current_level_index += 1
