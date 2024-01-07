@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bi5gqp13ygxl2"
-path="res://.godot/imported/ardin-spritesheet.png-caded963288e735983e8885e8516fb9f.ctex"
+uid="uid://b4beq6sqduhlq"
+path="res://.godot/imported/next.png-4a14bb3d3b235bb0505e1fa2dffc1d35.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ardin-spritesheet.png"
-dest_files=["res://.godot/imported/ardin-spritesheet.png-caded963288e735983e8885e8516fb9f.ctex"]
+source_file="res://assets/next.png"
+dest_files=["res://.godot/imported/next.png-4a14bb3d3b235bb0505e1fa2dffc1d35.ctex"]
 
 [params]
 

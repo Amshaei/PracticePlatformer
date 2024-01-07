@@ -48,7 +48,7 @@ func handle_jump():
 	else: # in air
 		if Input.is_action_just_released("ui_accept") and velocity.y < JUMP_VELOCITY / 2:
 			velocity.y = JUMP_VELOCITY / 2
-		if Input.is_action_pressed("ui_accept"):
+		if Input.is_action_pressed("ui_accept") and GlobalVars.has_jetpack:
 			handle_jetpack()
 
 func handle_jetpack():
