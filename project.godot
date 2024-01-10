@@ -18,7 +18,7 @@ config/icon="res://assets/next.png"
 [autoload]
 
 GlobalAudioStream="*res://audio/Audio_Stream.gd"
-GlobalVars="*res://levels/Global.gd"
+GlobalVars="*res://levels/GlobalVars.gd"
 
 [display]
 

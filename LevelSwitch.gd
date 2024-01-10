@@ -5,6 +5,9 @@ var current_level_index = 0
 
 @onready var current_level = $"../Start"
 @onready var player = $"../Player"
+@onready var left_eye = $L_Pupil
+@onready var right_eye = $R_Pupil
+
 
 func _ready():
 	var callable = Callable(self, "_on_body_entered")
@@ -20,8 +23,14 @@ func _ready():
 					"scene": load("res://levels/level_switching/" + file_name),
 					"player_position": Vector2(32, 0)  # replace with the desired player position
 				}
+				# make level behind HUD - issue #5
+				
 				levels.append(level)
 			file_name = dir.get_next()
+
+func _process(_delta):
+	left_eye.look_at(player.global_position)
+	right_eye.look_at(player.global_position)
 
 func _on_body_entered(body):
 	if body.name == "Player":

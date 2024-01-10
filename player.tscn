@@ -1,7 +1,42 @@
-[gd_scene load_steps=12 format=3 uid="uid://dw2pn6da4hoxn"]
+[gd_scene load_steps=17 format=3 uid="uid://dw2pn6da4hoxn"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_1juap"]
 [ext_resource type="Texture2D" uid="uid://bi5gqp13ygxl2" path="res://assets/ardin-spritesheet.png" id="2_gi8q8"]
+[ext_resource type="Texture2D" uid="uid://c10hgqnkxed22" path="res://assets/jetpack.png" id="2_s04h7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5bavg"]
+atlas = ExtResource("2_s04h7")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yg7et"]
+atlas = ExtResource("2_s04h7")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8mgqf"]
+atlas = ExtResource("2_s04h7")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ir5hw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5bavg")
+}],
+"loop": true,
+"name": &"off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yg7et")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8mgqf")
+}],
+"loop": true,
+"name": &"on",
+"speed": 12.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tbdre"]
 atlas = ExtResource("2_gi8q8")
@@ -81,6 +116,14 @@ animations = [{
 floor_constant_speed = true
 floor_snap_length = 2.0
 script = ExtResource("1_1juap")
+
+[node name="Jetpack" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(0, -8)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_ir5hw")
+animation = &"on"
+frame_progress = 0.591811
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)

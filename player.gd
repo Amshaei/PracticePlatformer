@@ -7,7 +7,6 @@ const FRICTION = 1000.0
 const JUMP_VELOCITY = -300.0 # y axis is negative going up
 const JETPACK_FORCE = 50.0
 const JETPACK_CONSUMPTION_RATE = 1.0
-var jetpack_fuel = 100.0
 var max_fuel = 100.0
 var jetpack_max_velocity = -200
 var has_jumped = false
@@ -17,6 +16,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var collision_shape_2d = $CollisionShape2D
+@onready var jetpack_sprite = $Jetpack
+
 @onready var world = get_tree().current_scene
 @onready var hud = world.get_node("Hud")
 
@@ -24,7 +25,6 @@ func _ready():
 	hud.set_max_fuel(max_fuel)
 
 func _physics_process(delta):
-	print("Jetpack Fuel: ", jetpack_fuel)
 	apply_gravity(delta)
 	handle_jump()
 	
@@ -43,8 +43,8 @@ func handle_jump():
 		if Input.is_action_pressed("ui_accept"):
 			velocity.y = JUMP_VELOCITY
 		else:
-			if (jetpack_fuel <= max_fuel):
-				jetpack_fuel += JETPACK_CONSUMPTION_RATE * 2
+			if (GlobalVars.jetpack_fuel <= max_fuel):
+				GlobalVars.jetpack_fuel += JETPACK_CONSUMPTION_RATE * 2
 	else: # in air
 		if Input.is_action_just_released("ui_accept") and velocity.y < JUMP_VELOCITY / 2:
 			velocity.y = JUMP_VELOCITY / 2
@@ -52,10 +52,10 @@ func handle_jump():
 			handle_jetpack()
 
 func handle_jetpack():
-	if jetpack_fuel > 0:
+	if GlobalVars.jetpack_fuel > 0:
 		velocity.y -= JETPACK_FORCE
 		velocity.y = max(velocity.y, jetpack_max_velocity)
-		jetpack_fuel -= JETPACK_CONSUMPTION_RATE
+		GlobalVars.jetpack_fuel -= JETPACK_CONSUMPTION_RATE
 	else:
 		print("Out of fuel!")
 
@@ -68,8 +68,19 @@ func apply_friction(input_axis, delta):
 		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 
 func update_animations(input_axis):
+	if GlobalVars.has_jetpack:
+		jetpack_sprite.visible = true
+	else:
+		jetpack_sprite.visible = false
+	
+	if Input.is_action_pressed("ui_accept") and GlobalVars.has_jetpack and GlobalVars.jetpack_fuel > 0:
+		jetpack_sprite.play("on")
+	else:
+		jetpack_sprite.play("off")
+	
 	if input_axis:
 		animated_sprite_2d.flip_h = (input_axis < 0)
+		jetpack_sprite.flip_h = (input_axis < 0)
 		collision_shape_2d.scale.x = input_axis
 		animated_sprite_2d.play("run")
 	else: 

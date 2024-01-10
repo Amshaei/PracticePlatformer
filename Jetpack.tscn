@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://c3uejevkys36r"]
+
+[ext_resource type="Script" path="res://Jetpack.gd" id="1_cegs3"]
+[ext_resource type="Texture2D" uid="uid://c10hgqnkxed22" path="res://assets/jetpack.png" id="1_vs0xm"]
+[ext_resource type="Texture2D" uid="uid://cok7jbrhpkk07" path="res://assets/strap.png" id="2_5dnfp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eh135"]
+atlas = ExtResource("1_vs0xm")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bmmya"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eh135")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_urckm"]
+radius = 2.0
+height = 8.0
+
+[node name="Jetpack" type="Area2D"]
+script = ExtResource("1_cegs3")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(3, -3.52)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_bmmya")
+
+[node name="Strap" type="Sprite2D" parent="."]
+position = Vector2(1, -3)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_5dnfp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("CapsuleShape2D_urckm")
